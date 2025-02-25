@@ -23,6 +23,10 @@ function Obelisk.m(moduleName)
     return Obelisk.module(moduleName)
 end
 
+function Obelisk.withParallel(mainFn)
+    parallel.waitForAny(mainFn, Obelisk.m("service").startUpdate)
+end
+
 function Obelisk.__callAllModules(parameter, ...)
     for _, module in pairs(Obelisk.__exportedModules) do
         if module[parameter] then module[parameter](...) end

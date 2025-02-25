@@ -13,21 +13,14 @@ function ServiceRunner.start()
 end
 
 function ServiceRunner.startUpdate()
-    ServiceRunner.__updateCoroutine = coroutine.create(function()
-        local timerID = os.startTimer(DELTA)  -- Start a repeating timer
-        while true do
-            local event, param = os.pullEvent()  -- Wait for an event
-            
-            if event == "timer" and param == timerID then
-                for _, service in pairs(ServiceRunner.__registeredServices) do
-                    if service.onUpdate then
-                        service.onUpdate(DELTA)
-                    end
-                end
-                timerID = os.startTimer(DELTA)  -- Restart the timer
+    while true do
+        for _, service in pairs(ServiceRunner.__registeredServices) do
+            if service.onUpdate then
+                service.onUpdate(DELTA)
             end
         end
-    end)()
+        os.sleep(DELTA)
+    end
 end
 
 function ServiceRunner.registerService(serviceName, service)
