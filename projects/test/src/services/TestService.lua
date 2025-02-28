@@ -4,6 +4,7 @@ local obelisk = require("Obelisk")
 local TestComponent = require("module/ui/example/TestComponent")
 local service = obelisk.m("service")
 local ui = obelisk.m("ui")
+local monitor = peripheral.find("monitor")
 
 service.registerService("UIService", {
     onStart = function()
@@ -11,6 +12,7 @@ service.registerService("UIService", {
     end,
     onUpdate = function()
         term.clear()
+        monitor.setTextScale(0.5)
         term.setBackgroundColor(colors.black)
         term.setCursorPos(0,0)
         ui.App({
