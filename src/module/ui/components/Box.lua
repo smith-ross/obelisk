@@ -1,4 +1,4 @@
-local Component = require("Component")
+local Component = require("module/ui/components/Component")
 
 local Box = Component:extend(function(self)
     local position, size, color = self.props.position, self.props.size, self.props.color

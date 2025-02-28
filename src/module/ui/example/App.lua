@@ -1,5 +1,5 @@
-local App = require("components/Component")
-local Box = require("components/Box")
+local App = require("module/ui/components/Component")
+local Box = require("module/ui/components/Box")
 
 return App({
     Box({

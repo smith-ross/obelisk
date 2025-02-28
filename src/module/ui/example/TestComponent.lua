@@ -1,5 +1,5 @@
-local Component = require("components/Component")
-local Box = require("components/Box")
+local Component = require("module/ui/components/Component")
+local Box = require("module/ui/components/Box")
 
 local TestComponent = Component:extend(function(self)
     local position = self.props.position or {x = 10, y = 10}

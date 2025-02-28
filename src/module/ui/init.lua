@@ -1,3 +1,3 @@
 return {
-    App = require("example/App")
+    App = require("module/ui/example/App")
 }
