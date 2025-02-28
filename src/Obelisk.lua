@@ -2,7 +2,8 @@ local Obelisk = {}
 
 Obelisk.__init = false
 Obelisk.__exportedModules = {
-    service = require("module/service/init")
+    service = require("module/service/init"),
+    ui = require("module/ui/init")
 }
 
 function Obelisk.init()
