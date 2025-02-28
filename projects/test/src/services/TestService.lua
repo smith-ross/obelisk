@@ -9,6 +9,7 @@ service.registerService("UIService", {
         print("Started Test Service")
     end,
     onUpdate = function()
+        term.clear()
         ui.App:draw()
     end
 })
