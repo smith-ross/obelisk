@@ -5,8 +5,9 @@ local service = obelisk.m("service")
 require("services/TestService")
 
 obelisk.init()
-obelisk.withParallel(function()
-    while true do
-        os.sleep(0)
-    end
-end)
+-- obelisk.withParallel(function()
+--     while true do
+--         os.sleep(0)
+--     end
+-- end)
+obelisk.m("service").startUpdate()

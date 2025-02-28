@@ -19,7 +19,9 @@ function Component:new(props)
     return self
 end
 
-function Component:render() end
+function Component:render() 
+    term.setCursorPos(0, 0)
+end
 
 function Component:instance()
     local clonedComponent = self:new(self.props)
@@ -37,6 +39,9 @@ end
 function Component:extend(renderFn, props, children)
     local self = self:instance()
     self.props = props or self.props
+    if children then
+        self.children = children or self.children
+    end
     if renderFn then
         local origRender = self.render
         self.render = function(self)

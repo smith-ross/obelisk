@@ -6,7 +6,7 @@ local TestComponent = Component:extend(function(self)
     return Box:withProps({
         position = {x = position.x, y = position.y},
         size = {x = 2, y = 2},
-        color = colors.lime,
+        color = self.props.color or colors.lime,
     })()
 end)
 
