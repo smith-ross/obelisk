@@ -1,7 +1,7 @@
 local App = require("module/ui/components/Component")
 local TestComponent = require("module/ui/example/TestComponent")
 
-return App:new({
+return App:new() {
     TestComponent({
         id = "Test1",
         position = {x = 10, y = 10}
@@ -14,4 +14,4 @@ return App:new({
         id = "Test3",
         position = {x = 10, y = 50}
     }),
-})
+}
