@@ -31,5 +31,6 @@ service.registerService("UIService", {
                 size = {x = 2, y = 2},
             })(),
         })
+        term.setBackgroundColor(colors.black)
     end
 })
