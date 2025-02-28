@@ -1,12 +1,11 @@
 local Component = {}
 Component.__index = Component
+Component.__call = function(t, children)
+    return t:extend()(children):draw()
+end
 
 function Component:new(props)
-    local self = setmetatable({
-        __call = function(t, children)
-            return t:extend()(children):draw()
-        end
-    }, Component)
+    local self = setmetatable({}, Component)
 
     self.props = props or {
         position = {x = 0, y = 0},
