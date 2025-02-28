@@ -6,7 +6,7 @@ local ExampleComponent = Component:extend(function(exampleComponent)
     local counter = exampleComponent:defineState("Counter", 0)
     local text = exampleComponent:defineState("Text", "Counted multiple of 5 0 times.")
 
-    exampleComponent:effect(function()
+    exampleComponent:effect("mod5Effect", function()
         if counter.get() % 5 == 0 then
             text.set("Counted multiple of 5 " .. tostring(counter.get() % 5) .. " times.")
         end

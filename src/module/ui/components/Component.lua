@@ -4,11 +4,14 @@ Component.__index = Component
 function Component:new(props)
     local self = setmetatable({
         __call = function(t, children)
-            return t:extend()(children)
+            return t:extend()(children):draw()
         end
     }, Component)
 
-    self.props = props or {}
+    self.props = props or {
+        position = {x = 0, y = 0},
+        size = {x = 0, y = 0}
+    }
     self.state = {}
     self.effects = {}
     self.prevDependencies = {}
@@ -27,7 +30,7 @@ function Component:instance()
 end
 
 function Component:withProps(props)
-    return self:extend(nil, props)
+    return self:extend(nil, props):draw()
 end
 
 function Component:extend(renderFn, props)
@@ -46,7 +49,7 @@ function Component:extend(renderFn, props)
 end
 
 function Component:draw()
-    self:render()
+    local r = self:render()
     for _, effect in pairs(self.effects) do
         local rerun = self.prevDependencies[effect.effect] == nil
         if not rerun then
@@ -59,6 +62,14 @@ function Component:draw()
         end
         self.prevDependencies[effect.effect] = effect.dep
         if rerun then effect.effect() end
+    end
+    if r then
+        r:draw()
+    end
+    if self.children then
+        for _, child in pairs(self.children) do
+            child:draw()
+        end
     end
 end
 

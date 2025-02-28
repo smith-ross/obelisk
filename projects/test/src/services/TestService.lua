@@ -2,12 +2,13 @@ package.path = package.path..";../../../../../src/?.lua"
 
 local obelisk = require("Obelisk")
 local service = obelisk.m("service")
+local ui = obelisk.m("ui")
 
-service.registerService("TestService", {
+service.registerService("UIService", {
     onStart = function()
         print("Started Test Service")
     end,
     onUpdate = function()
-        print("Updated Test Service")
+        ui.App:draw()
     end
 })
