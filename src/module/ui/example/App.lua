@@ -1,7 +1,7 @@
 local App = require("module/ui/components/Component")
 local Box = require("module/ui/components/Box")
 
-return App({
+return App:new({
     Box({
         position = {x = 10, y = 10}
     }),
