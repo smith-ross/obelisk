@@ -2,7 +2,7 @@ local ServiceRunner = {}
 ServiceRunner.__registeredServices = {}
 ServiceRunner.__updateCoroutine = nil
 
-local DELTA = 10
+local DELTA = 1/60
 
 function ServiceRunner.start()
     for _, service in pairs(ServiceRunner.__registeredServices) do

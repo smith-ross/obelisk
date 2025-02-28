@@ -1,8 +1,10 @@
 local Component = {}
 Component.__index = Component
-Component.__call = function(t, children)
-    return t:extend(nil, nil, children):draw()
+Component.__call = function(t, id, children)
+    return t:extend(id, nil, nil, children):draw()
 end
+
+local state = {}
 
 function Component:new(props)
     local self = setmetatable({}, Component)
@@ -11,7 +13,6 @@ function Component:new(props)
         position = {x = 0, y = 0},
         size = {x = 0, y = 0}
     }
-    self.state = {}
     self.effects = {}
     self.prevDependencies = {}
     self.children = {}
@@ -30,17 +31,21 @@ function Component:instance()
     return clonedComponent
 end
 
-function Component:withProps(props)
+function Component:withProps(id, props)
     return function(children)
-        self:extend(nil, props, children):draw()
+        self:extend(id, nil, props, children):draw()
     end
 end
 
-function Component:extend(renderFn, props, children)
+function Component:extend(id, renderFn, props, children)
     local self = self:instance()
     self.props = props or self.props
+    self.id = id
     if children then
         self.children = children or self.children
+    end
+    if self.id and not state[self.id] then
+        state[self.id] = {}
     end
     if renderFn then
         local origRender = self.render
@@ -85,8 +90,9 @@ function Component:effect(id, effectFn, dependencies)
 end
 
 function Component:defineState(id, value)
-    if (self.state[id]) then return end
-    self.state[id] = value
+    if (state[self.id][id] == nil) then
+        state[self.id][id] = value
+    end
 
     return {
         get = function()
@@ -107,16 +113,16 @@ function Component:prop(propId)
 end
 
 function Component:getState(id)
-    return self.state[id]
+    return state[self.id][id]
 end
 
 function Component:updateState(id, value)
-    if (self.state[id] == nil) then warn("State not initialised: ", id) return end
-    self.state[id] = value
+    if (state[self.id][id] == nil) then warn("State not initialised: ", id) return end
+    state[self.id][id] = value
 end
 
 function Component:deleteState(id)
-    self.state[id] = nil;
+    state[self.id][id] = nil;
 end
 
 return Component
