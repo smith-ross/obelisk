@@ -5,7 +5,7 @@ local TestComponent = Component:extend(function(self)
     local position = self.props.position or {x = 10, y = 10}
     return Box:withProps({
         position = {x = position.x, y = position.y},
-        size = {x = 30, y = 30},
+        size = {x = 2, y = 2},
         color = colors.lime,
     })()
 end)

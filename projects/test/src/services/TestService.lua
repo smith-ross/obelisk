@@ -10,6 +10,7 @@ service.registerService("UIService", {
     end,
     onUpdate = function()
         term.clear()
+        term.setBackgroundColor(colors.black)
         ui.App:draw()
     end
 })

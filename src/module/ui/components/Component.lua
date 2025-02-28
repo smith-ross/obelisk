@@ -48,8 +48,6 @@ function Component:extend(renderFn, props, children)
 end
 
 function Component:draw()
-    print("Attempt draw")
-    print(self.props.id)
     local r = self:render()
     for _, effect in pairs(self.effects) do
         local rerun = self.prevDependencies[effect.effect] == nil
