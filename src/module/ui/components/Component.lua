@@ -29,7 +29,9 @@ function Component:instance()
 end
 
 function Component:withProps(props)
-    return self:extend(nil, props):draw()
+    return function(children)
+        self:extend(nil, props, children):draw()
+    end
 end
 
 function Component:extend(renderFn, props, children)
