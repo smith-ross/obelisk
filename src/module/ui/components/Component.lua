@@ -1,7 +1,7 @@
 local Component = {}
 Component.__index = Component
 Component.__call = function(t, children)
-    return t:extend()(children):draw()
+    return t:extend(nil, nil, children):draw()
 end
 
 function Component:new(props)
@@ -32,7 +32,7 @@ function Component:withProps(props)
     return self:extend(nil, props):draw()
 end
 
-function Component:extend(renderFn, props)
+function Component:extend(renderFn, props, children)
     local self = self:instance()
     self.props = props or self.props
     if renderFn then
@@ -42,9 +42,7 @@ function Component:extend(renderFn, props)
             origRender(self)
         end
     end
-    return function(c)
-        self.children = c
-    end
+    return self
 end
 
 function Component:draw()
