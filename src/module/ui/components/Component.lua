@@ -5,6 +5,8 @@ Component.__call = function(t, id, children)
 end
 
 local state = {}
+local effects = {}
+local prevDependencies = {}
 
 function Component:new(props)
     local self = setmetatable({}, Component)
@@ -13,8 +15,11 @@ function Component:new(props)
         position = {x = 0, y = 0},
         size = {x = 0, y = 0}
     }
-    self.effects = {}
-    self.prevDependencies = {}
+    if self.id then
+        effects[self.id] = {}
+        state[self.id] = {}
+        prevDependencies[self.id] = {}
+    end
     self.children = {}
 
     return self
@@ -46,6 +51,8 @@ function Component:extend(id, renderFn, props, children)
     end
     if self.id and not state[self.id] then
         state[self.id] = {}
+        effects[self.id] = {}
+        prevDependencies[self.id] = {}
     end
     if renderFn then
         local origRender = self.render
@@ -59,17 +66,17 @@ end
 
 function Component:draw()
     local r = self:render()
-    for _, effect in pairs(self.effects) do
-        local rerun = self.prevDependencies[effect.effect] == nil
+    for id, effect in pairs(effects[self.id]) do
+        local rerun = prevDependencies[self.id][id] == nil
         if not rerun then
-            for i, v in pairs(self.prevDependencies[effect.effect] or {}) do
+            for i, v in pairs(prevDependencies[self.id][id] or {}) do
                 if v ~= effect.dep[i] then
                     rerun = true
                     break
                 end
             end
         end
-        self.prevDependencies[effect.effect] = effect.dep
+        prevDependencies[self.id][id] = effect.dep
         if rerun then effect.effect() end
     end
     if r then
@@ -83,7 +90,7 @@ function Component:draw()
 end
 
 function Component:effect(id, effectFn, dependencies)
-    self.effects[id] = {
+    effects[self.id][id] = {
         effect = effectFn,
         dep = dependencies or {}
     }
