@@ -3,8 +3,8 @@ local TextLabel = require("components/TextLabel")
 local RandomChildComponent = require("components/RandomChildComponent")
 
 local ExampleComponent = Component:extend(function(exampleComponent)
-    local counter = exampleComponent:defineState("Counter", 0)
-    local text = exampleComponent:defineState("Text", "Counted multiple of 5 0 times.")
+    local counter = exampleComponent:state("Counter", 0)
+    local text = exampleComponent:state("Text", "Counted multiple of 5 0 times.")
 
     exampleComponent:effect("mod5Effect", function()
         if counter.get() % 5 == 0 then
